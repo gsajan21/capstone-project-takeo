@@ -1,0 +1,1 @@
+<img src="./assets/er_diagram.png">
