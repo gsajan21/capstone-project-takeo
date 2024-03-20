@@ -6,6 +6,7 @@ import com.sajan.pms.repo.UserRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +62,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> deleteUserById(Integer userId) {
-        return userRepo.deleteUserByUserId(userId);
+//        Optional<User> userToDelete = userRepo.getUserByUserId(userId);
+//        if(userToDelete.isPresent()) {
+//            userRepo.deleteUserByUserId(userId);
+//            return userToDelete;
+//        }
+//        else
+//            return Optional.empty();
+
+        Optional<User> userToDelete = userRepo.getUserByUserId(userId);
+        if(userToDelete.isPresent()){
+            User user = userToDelete.get();
+            userRepo.delete(user);
+            return userToDelete;
+        } else
+            return Optional.empty();
     }
+
 }

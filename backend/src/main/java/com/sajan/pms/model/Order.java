@@ -3,12 +3,14 @@ package com.sajan.pms.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="order")
+@Table(name="order_table")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
-    private Integer productId;
-    private Integer userId;
+    @ManyToOne
+    private Product product;
+    @ManyToOne
+    private User user;
     private boolean shipped;
 }

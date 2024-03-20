@@ -19,5 +19,7 @@ public class Product {
     private Integer price;
     private Integer quantity;
     private String images;
-    private String category;
+
+    @ManyToOne
+    private Category category;
 }

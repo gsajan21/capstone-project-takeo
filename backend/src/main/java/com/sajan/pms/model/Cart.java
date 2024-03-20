@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,9 +18,11 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
-    private Integer productId;
-    private Integer userId;
-    private Integer price;
+    @ManyToOne
+    private Product product;
+    @ManyToOne
+    private User user;
+    private BigDecimal price;
     private LocalDateTime date;
     private Integer paidAmount;
     private Boolean shipped;
