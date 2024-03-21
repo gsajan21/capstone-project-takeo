@@ -1,9 +1,17 @@
 package com.sajan.pms.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="order_table")
+@Table(name="products_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,5 +20,7 @@ public class Order {
     private Product product;
     @ManyToOne
     private User user;
+    private LocalDateTime orderDate;
+    private Double totalAmount;
     private boolean shipped;
 }

@@ -17,15 +17,12 @@ import java.time.LocalDateTime;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderId;
+    private Integer cardId;
+
     @ManyToOne
     private Product product;
-    @ManyToOne
-    private User user;
-    private BigDecimal price;
     private LocalDateTime date;
-    private Integer paidAmount;
-    private Boolean shipped;
-    private Integer quantity;
+    private BigDecimal totalPrice;
+    private LocalDateTime addedDate;
 
 }

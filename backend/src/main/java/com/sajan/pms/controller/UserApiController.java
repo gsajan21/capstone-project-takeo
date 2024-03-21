@@ -3,6 +3,7 @@ package com.sajan.pms.controller;
 import com.sajan.pms.dto.UserDetails;
 import com.sajan.pms.model.User;
 import com.sajan.pms.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,20 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class UserController {
+public class UserApiController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @PostMapping("/user")
-    public ResponseEntity<User> createUser(@RequestBody UserDetails userDetails){
-        return userService.addUser(userDetails).map(user -> new ResponseEntity<>(user, HttpStatus.CREATED))
-                .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
-    }
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(){
         return userService.getAllUsers().map(ResponseEntity::ok).orElseGet(() ->
