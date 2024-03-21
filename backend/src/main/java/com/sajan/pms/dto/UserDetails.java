@@ -1,6 +1,6 @@
 package com.sajan.pms.dto;
 
-import com.sajan.pms.model.Role;
+import com.sajan.pms.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
