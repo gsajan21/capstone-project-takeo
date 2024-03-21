@@ -2,5 +2,6 @@ package com.sajan.pms.enums;
 
 public enum OrderStatus {
     PENDING,
-    SUBMITTED
+    SUBMITTED,
+    CANCELLED
 }

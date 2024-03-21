@@ -21,7 +21,7 @@ public class Order {
     private String address;
     private String paymentType;
     private Double totalAmount;
-    private LocalDateTime orderDate;
+    private LocalDateTime dateCreated;
     private OrderStatus orderStatus;
 
     @ManyToOne
