@@ -2,12 +2,12 @@ package com.sajan.pms.service.implementation;
 
 
 import com.sajan.pms.dto.AuthenticationResponse;
+import com.sajan.pms.dto.LoginRequest;
 import com.sajan.pms.dto.UserDetails;
 import com.sajan.pms.model.Token;
 import com.sajan.pms.model.User;
 import com.sajan.pms.repo.TokenRepo;
 import com.sajan.pms.repo.UserRepo;
-import com.sajan.pms.service.JwtService;
 import com.sajan.pms.service.UserAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,7 +44,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         return new AuthenticationResponse(jwt, "User registration was successful.");
     }
     
-    public AuthenticationResponse authenticate(UserDetails request){
+    public AuthenticationResponse authenticate(LoginRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

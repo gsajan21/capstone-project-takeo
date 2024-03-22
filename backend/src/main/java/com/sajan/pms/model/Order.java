@@ -28,7 +28,7 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
     private List<CartItem> cartItems;
 }
 

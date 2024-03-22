@@ -1,4 +1,4 @@
-package com.sajan.pms.service;
+package com.sajan.pms.service.implementation;
 
 import com.sajan.pms.model.User;
 import com.sajan.pms.repo.TokenRepo;

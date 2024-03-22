@@ -1,6 +1,6 @@
 package com.sajan.pms.filter;
 
-import com.sajan.pms.service.JwtService;
+import com.sajan.pms.service.implementation.JwtService;
 import com.sajan.pms.service.implementation.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

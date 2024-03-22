@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,12 +17,18 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService {
 
     private final CartRepo cartRepo;
-    @Override
-    public Optional<CartItem> addToCart(AddToCartRequest addToCartRequest) {
 
-        CartItem addCartItem = new CartItem();
-        BeanUtils.copyProperties(addToCartRequest, addCartItem);
-        CartItem saveItem = cartRepo.save(addCartItem);
+    @Override
+    public Optional<List<CartItem>> viewAllCartItems() {
+        return Optional.of(cartRepo.findAll());
+    }
+
+    @Override
+    public Optional<CartItem> addToCart(CartItem cartItem) {
+
+        CartItem addToCart = new CartItem();
+        BeanUtils.copyProperties(cartItem, addToCart);
+        CartItem saveItem = cartRepo.save(addToCart);
         return Optional.of(saveItem);
     }
 

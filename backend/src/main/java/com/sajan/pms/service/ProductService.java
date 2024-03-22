@@ -11,6 +11,5 @@ public interface ProductService {
     Optional<List<Product>> getAllProducts();
     Optional<Product> getProductById(Integer productId);
     Optional<Product> updateProductById(Integer productId);
-
     Optional<Product> deleteProductById(Integer productId);
 }

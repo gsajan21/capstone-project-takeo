@@ -1,5 +1,6 @@
 package com.sajan.pms.controller;
 
+import com.sajan.pms.dto.ForgotPasswordRequest;
 import com.sajan.pms.dto.UserDetails;
 import com.sajan.pms.model.User;
 import com.sajan.pms.service.UserService;
@@ -12,33 +13,43 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 public class UserApiController {
 
     private final UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers(){
         return userService.getAllUsers().map(ResponseEntity::ok).orElseGet(() ->
                 ResponseEntity.noContent().build());
     }
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Integer userId){
         return userService.getUserById(userId).map(user -> new ResponseEntity<>(user, HttpStatus.OK))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PutMapping("/user/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<User> updateUserById(@PathVariable Integer userId, @RequestBody UserDetails userDetails){
         return userService.updateUser(userId, userDetails).map(user -> ResponseEntity.ok().body(user))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUserById(@PathVariable Integer userId){
         return userService.deleteUserById(userId).map(user-> ResponseEntity.ok().build())
                 .orElse(ResponseEntity.notFound().build());
     }
+//    @PostMapping("/forgot-password")
+//    public ResponseEntity<String> userForgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest){
+//        String email = forgotPasswordRequest.getEmail();
+//        String password = .getPasswordByEmail(email);
+//        if (password != null) {
+//            return ResponseEntity.ok("Your password is: " + password);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Password not found for the provided email.");
+//        }
+//    }
 
 
 }
