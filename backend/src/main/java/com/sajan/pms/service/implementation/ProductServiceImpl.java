@@ -1,8 +1,9 @@
-package com.sajan.pms.service;
+package com.sajan.pms.service.implementation;
 
 import com.sajan.pms.dto.ProductDetails;
 import com.sajan.pms.model.Product;
 import com.sajan.pms.repo.ProductRepo;
+import com.sajan.pms.service.ProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

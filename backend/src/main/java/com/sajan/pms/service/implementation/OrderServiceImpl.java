@@ -1,8 +1,9 @@
-package com.sajan.pms.service;
+package com.sajan.pms.service.implementation;
 
 import com.sajan.pms.model.Order;
 import com.sajan.pms.model.User;
 import com.sajan.pms.repo.OrderRepo;
+import com.sajan.pms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
