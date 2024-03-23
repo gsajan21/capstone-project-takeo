@@ -15,18 +15,18 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/product")
 public class ProductApiController {
 
     private final ProductServiceImpl productService;
 
-    @GetMapping("/products")
+    @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts(){
         List<Product> productList = productService.getAllProducts().orElse(Collections.emptyList());
         return ResponseEntity.status(HttpStatus.OK).body(productList);
 
     }
-    @PostMapping("/product")
+    @PostMapping("/add")
     public ResponseEntity<Product> addProduct(@RequestBody ProductDetails productDetails){
         Product savedProduct = productService.saveProduct(productDetails).orElseThrow(() ->
                 new RuntimeException("Failed to save the product"));
@@ -34,7 +34,7 @@ public class ProductApiController {
         return ResponseEntity.status(HttpStatus.OK).body(savedProduct);
     }
 
-    @GetMapping("/product/{productId}")
+    @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer productId){
         Product product = productService.getProductById(productId).orElseThrow(() ->
                 new NoSuchElementException("Product not found."));

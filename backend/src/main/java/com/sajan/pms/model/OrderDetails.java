@@ -7,22 +7,16 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+@Entity
+@Table(name="order_details")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name="product")
-public class Product {
+public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productId;
-    private String productName;
-    private String description;
-    private BigDecimal price;
+    private Integer id;
     private Integer quantity;
-    private String images;
-
-    @ManyToOne
-    @JoinColumn(name="category_id", nullable = false)
-    private Category category;
+    private BigDecimal price;
+    private BigDecimal totalPrice;
 }

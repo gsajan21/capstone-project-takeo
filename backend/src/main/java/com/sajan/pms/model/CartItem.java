@@ -20,10 +20,6 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cartId;
 
-    private BigDecimal totalPrice;
-
-    private Integer quantity;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -37,8 +33,7 @@ public class CartItem {
     @JsonIgnore
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="order_id")
-    private Order order;
+    private Integer quantity;
+    private BigDecimal totalPrice;
 
 }
