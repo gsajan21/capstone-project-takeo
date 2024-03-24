@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @RestController
@@ -40,5 +41,17 @@ public class ProductApiController {
                 new NoSuchElementException("Product not found."));
 
         return ResponseEntity.status(HttpStatus.OK).body(product);
+    }
+    @PutMapping("/{productId}")
+    public ResponseEntity<Product> updateProductById(@PathVariable Integer productId, @RequestBody ProductDetails productDetails){
+        Optional<Product> product = productService.updateProductById(productId, productDetails);
+        return product.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+
+    }
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Product> deleteProductById(@PathVariable Integer productId){
+        return productService.deleteProductById(productId).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

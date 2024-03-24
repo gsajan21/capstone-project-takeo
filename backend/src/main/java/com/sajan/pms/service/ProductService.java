@@ -10,6 +10,6 @@ public interface ProductService {
     Optional<Product> saveProduct(ProductDetails productDetails);
     Optional<List<Product>> getAllProducts();
     Optional<Product> getProductById(Integer productId);
-    Optional<Product> updateProductById(Integer productId);
+    Optional<Product> updateProductById(Integer productId, ProductDetails productDetails);
     Optional<Product> deleteProductById(Integer productId);
 }

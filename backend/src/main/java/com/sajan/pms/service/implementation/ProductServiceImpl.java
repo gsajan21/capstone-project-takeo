@@ -38,18 +38,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Product> getProductById(Integer productId) {
-        return productRepo.getProductsByProductId(productId);
+        return productRepo.findById(productId);
 
     }
 
 
     @Override
-    public Optional<Product> updateProductById(Integer productId) {
-        return Optional.empty();
+    public Optional<Product> updateProductById(Integer productId, ProductDetails productDetails) {
+        Optional<Product> byId = productRepo.findById(productId);
+
+        if(byId.isPresent()){
+            Product updateProduct = byId.get();
+            BeanUtils.copyProperties(productDetails, updateProduct);
+            productRepo.save(updateProduct);
+            return Optional.of(updateProduct);
+        }else
+            return Optional.empty();
     }
 
     @Override
     public Optional<Product> deleteProductById(Integer productId) {
-        return Optional.empty();
+        Optional<Product> byId = productRepo.findById(productId);
+        if (byId.isPresent()) {
+            productRepo.deleteById(productId);
+            return byId;
+        } else
+            return Optional.empty();
     }
 }
