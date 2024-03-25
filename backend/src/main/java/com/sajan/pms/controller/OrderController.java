@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -30,6 +29,11 @@ public class OrderController {
     @PutMapping("/{orderId}")
     public ResponseEntity<Order> updateOrderById(@PathVariable Integer orderId, @RequestBody OrderRequest orderRequest){
         return orderService.updateOrderById(orderId, orderRequest).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+    @PutMapping("/cancel-order/{orderId}")
+    public ResponseEntity<Order> cancelOrder(@PathVariable Integer orderId){
+        return orderService.cancelOrderById(orderId).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 }

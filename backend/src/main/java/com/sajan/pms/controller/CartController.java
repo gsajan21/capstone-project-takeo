@@ -1,12 +1,11 @@
 package com.sajan.pms.controller;
 
 import com.sajan.pms.dto.OrderRequest;
+import com.sajan.pms.dto.UpdateProductQtyRequest;
 import com.sajan.pms.model.CartItem;
 import com.sajan.pms.model.Order;
 import com.sajan.pms.service.implementation.CartServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +42,19 @@ public class CartController {
     @PostMapping("/checkout")
     public ResponseEntity<Order> checkout(@RequestBody OrderRequest orderRequest){
         Optional<Order> orderOptional = cartService.addCartItemsToOrder(orderRequest);
-        return orderOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+        return orderOptional.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @DeleteMapping("/{cartId}}")
+    public ResponseEntity<CartItem> removeItemById(@PathVariable Integer cartId){
+        return cartService.removeFromCartById(cartId).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.badRequest().build());
+    }
+    @PutMapping("/{cartId}")
+    public ResponseEntity<CartItem> updateItemByCartId(@PathVariable Integer cartId, UpdateProductQtyRequest request){
+        return cartService.updateQtyOfCartItem(cartId, request).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }
