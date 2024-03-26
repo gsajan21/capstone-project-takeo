@@ -1,8 +1,9 @@
-package com.sajan.pms.service;
+package com.sajan.pms.service.implementation;
 
 import com.sajan.pms.dto.UserDetails;
 import com.sajan.pms.model.User;
 import com.sajan.pms.repo.UserRepo;
+import com.sajan.pms.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +19,21 @@ public class UserServiceImpl implements UserService {
         this.userRepo = userRepo;
     }
 
-    @Override
-    public Optional<User> addUser(UserDetails userDetails) {
-        User newUser = new User();
-        BeanUtils.copyProperties(userDetails, newUser);
-        User savedUser = userRepo.save(newUser);
-
-        // Check if the user was successfully saved
-        if (savedUser.getUserId() != null) {
-            // If saved successfully, return an Optional containing the saved user
-            return Optional.of(savedUser);
-        } else {
-            // If not saved successfully, return an empty Optional
-            return Optional.empty();
-        }
-    }
+//    @Override
+//    public Optional<User> addUser(UserDetails userDetails) {
+//        User newUser = new User();
+//        BeanUtils.copyProperties(userDetails, newUser);
+//        User savedUser = userRepo.save(newUser);
+//
+//        // Check if the user was successfully saved
+//        if (savedUser.getUserId() != null) {
+//            // If saved successfully, return an Optional containing the saved user
+//            return Optional.of(savedUser);
+//        } else {
+//            // If not saved successfully, return an empty Optional
+//            return Optional.empty();
+//        }
+//    }
 
     @Override
     public Optional<User> getUserById(Integer userId) {

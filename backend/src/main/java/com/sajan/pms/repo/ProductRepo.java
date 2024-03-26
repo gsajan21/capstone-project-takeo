@@ -9,7 +9,4 @@ import java.util.Optional;
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 
-    Optional<Product> getProductsByProductId(Integer productId);
-//    Optional<Product> deleteProductByProductId(Integer productId);
-
 }
