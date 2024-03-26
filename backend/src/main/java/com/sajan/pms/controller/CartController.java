@@ -46,7 +46,7 @@ public class CartController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @DeleteMapping("/{cartId}}")
+    @DeleteMapping("/{cartId}")
     public ResponseEntity<CartItem> removeItemById(@PathVariable Integer cartId){
         return cartService.removeFromCartById(cartId).map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
