@@ -43,17 +43,13 @@ To set up the Product Management System on your local machine, follow these step
 - Frontend Setup: Navigate to the frontend directory, install dependencies using npm or yarn, and start the development server.
 Usage
 
-Web Interface (React)
-Login: Access the system using your credentials.
-Dashboard: View an overview of products and access various functionalities.
-Product Management: Add, edit, or delete products as needed.
-Search: Search for products using different criteria.
-RESTful API
-You can also interact with the system programmatically using the RESTful API. Refer to the API documentation for details on available endpoints and how to use them.
+## Web Interface (React)
+- Login: Access the system using your credentials.
+- Dashboard: View an overview of products and access various functionalities.
+- Product Management: Add, edit, or delete products as needed.
+- Search: Search for products using different criteria.
 
 
 # Conclusion
 
 This Product Management System provides a robust solution for businesses to manage their products effectively. With the combination of Spring Boot in the backend and React in the frontend, users can seamlessly perform various product-related operations.
-
-For any questions or issues, feel free to contact our support team.
