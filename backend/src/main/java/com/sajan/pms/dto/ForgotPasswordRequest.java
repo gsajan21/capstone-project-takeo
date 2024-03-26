@@ -1,6 +1,5 @@
 package com.sajan.pms.dto;
 
-import com.sajan.pms.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetails {
-    private String firstName;
-    private String lastName;
+public class ForgotPasswordRequest {
     private String email;
-    private String password;
-    private Role role;
 }
