@@ -25,7 +25,7 @@ public class UserAuthController {
         System.out.println(request.getFirstName());
         return ResponseEntity.ok(userAuthService.register(request));
     }
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> userLogin(@RequestBody LoginRequest request){
        return ResponseEntity.ok(userAuthService.authenticate(request));
 
