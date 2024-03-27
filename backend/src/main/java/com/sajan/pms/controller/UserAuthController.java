@@ -1,27 +1,23 @@
 package com.sajan.pms.controller;
 
 import com.sajan.pms.dto.AuthenticationResponse;
-import com.sajan.pms.dto.ForgotPasswordRequest;
 import com.sajan.pms.dto.LoginRequest;
-import com.sajan.pms.dto.UserDetails;
+import com.sajan.pms.dto.UserRequest;
 import com.sajan.pms.service.implementation.UserAuthServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 @RequestMapping("/api/v1/auth")
 public class UserAuthController {
 
     private final UserAuthServiceImpl userAuthService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> userRegister(@RequestBody UserDetails request){
+    public ResponseEntity<AuthenticationResponse> userRegister(@RequestBody UserRequest request){
         System.out.println(request.getFirstName());
         return ResponseEntity.ok(userAuthService.register(request));
     }

@@ -1,6 +1,6 @@
 package com.sajan.pms.service.implementation;
 
-import com.sajan.pms.dto.UserDetails;
+import com.sajan.pms.dto.UserRequest;
 import com.sajan.pms.model.User;
 import com.sajan.pms.repo.UserRepo;
 import com.sajan.pms.service.UserService;
@@ -47,13 +47,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> updateUser(Integer userId, UserDetails userDetails) {
+    public Optional<User> updateUser(Integer userId, UserRequest userRequest) {
         Optional<User> userByUserId = userRepo.getUserByUserId(userId);
 
         if(userByUserId.isPresent()) {
             User userToUpdate = userByUserId.get();
 
-            BeanUtils.copyProperties(userDetails, userToUpdate);
+            BeanUtils.copyProperties(userRequest, userToUpdate);
             return Optional.of(userRepo.save(userToUpdate));
         } else
             return Optional.empty();

@@ -35,7 +35,7 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Token> tokens;
 

@@ -1,7 +1,6 @@
 package com.sajan.pms.controller;
 
-import com.sajan.pms.dto.ForgotPasswordRequest;
-import com.sajan.pms.dto.UserDetails;
+import com.sajan.pms.dto.UserRequest;
 import com.sajan.pms.model.User;
 import com.sajan.pms.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +29,8 @@ public class UserApiController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUserById(@PathVariable Integer userId, @RequestBody UserDetails userDetails){
-        return userService.updateUser(userId, userDetails).map(user -> ResponseEntity.ok().body(user))
+    public ResponseEntity<User> updateUserById(@PathVariable Integer userId, @RequestBody UserRequest userRequest){
+        return userService.updateUser(userId, userRequest).map(user -> ResponseEntity.ok().body(user))
                 .orElse(ResponseEntity.notFound().build());
     }
 

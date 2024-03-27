@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom'; // Import BrowserRouter
 import './index.css';
-import RegisterPage from './pages/RegisterPage'; // Import RegisterPage without .tsx extension
+import App from './App';
 
 ReactDOM.render(
   <Router>
-    <RegisterPage />
+    <App />
   </Router>,
   document.getElementById("root")
 );

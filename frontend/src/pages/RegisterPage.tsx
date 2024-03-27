@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios"; // Import axios
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -8,49 +9,34 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    e.preventDefault();
-    
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+  const submitHandler = async (e) => {
+    // Define the submitHandler as async
+    e.preventDefault(); // Prevent the default form submission
 
-    // Prepare data object to be sent to the backend
-    const data = {
-      firstName,
-      lastName,
-      email,
-      password,
-    };
+    const data = { firstName, lastName, email, password }; // Create the data object
 
     try {
       // Make an HTTP POST request to your backend API
-      const response = await axios.post("/api/v1/register", data);
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/register",
+        data
+      );
 
       // Handle the response from the backend
       console.log("Registration successful:", response.data);
-      
-      // Optionally, redirect the user to another page
-      // history.push("/login"); // Assuming you have access to the history object
     } catch (error) {
       // Handle errors
-      console.error("Registration failed:", error.message);
-      // Optionally, display an error message to the user
+      console.error("Error occurred while registering:", error);
     }
-  };
   };
 
   return (
-    <div className="flex justify-center items-center mt-4">
-      <div className="w-full max-w-[28rem]">
-        <h1 className="mb-5 text-3xl text-center">Register</h1>
-        <form
-          onSubmit={submitHandler}
-          className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4"
-        >
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+      <div className="w-full max-w-sm bg-white rounded-lg shadow-lg">
+        <h1 className="text-3xl text-center font-semibold text-gray-800 mt-8">
+          Register
+        </h1>
+        <form onSubmit={submitHandler} className="px-8 py-6">
           <div className="mb-4">
             <label
               htmlFor="firstName"
@@ -64,7 +50,7 @@ const RegisterPage = () => {
               placeholder="Enter first name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -80,7 +66,7 @@ const RegisterPage = () => {
               placeholder="Enter last name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -96,7 +82,7 @@ const RegisterPage = () => {
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -112,7 +98,7 @@ const RegisterPage = () => {
               placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-6">
@@ -128,23 +114,24 @@ const RegisterPage = () => {
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div className="flex flex-col items-center justify-between space-y-3">
+          <div className="flex items-center justify-between mb-6">
             <button
               type="submit"
-              className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-[50%]"
+              className="w-full bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Register
             </button>
-
-            <div className="inline-block align-baseline font-bold text-sm text-gray-500">
+          </div>
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
               Already have an account?{" "}
-              <Link className="text-blue-500 hover:text-blue-800" to="/login">
+              <Link className="font-bold text-blue-500 hover:text-blue-700" to="/login">
                 Login
               </Link>
-            </div>
+            </p>
           </div>
         </form>
       </div>

@@ -3,7 +3,8 @@ package com.sajan.pms.service.implementation;
 
 import com.sajan.pms.dto.AuthenticationResponse;
 import com.sajan.pms.dto.LoginRequest;
-import com.sajan.pms.dto.UserDetails;
+import com.sajan.pms.dto.UserRequest;
+import com.sajan.pms.enums.Role;
 import com.sajan.pms.model.Token;
 import com.sajan.pms.model.User;
 import com.sajan.pms.repo.TokenRepo;
@@ -28,14 +29,14 @@ public class UserAuthServiceImpl implements UserAuthService {
     private final TokenRepo tokenRepo;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(UserDetails request){
+    public AuthenticationResponse register(UserRequest request){
         User user = new User();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        user.setRole(request.getRole());
+        user.setRole(Role.USER);
         User savedUser = userRepo.save(user);
 
         String jwt = jwtService.generateToken(savedUser);
@@ -92,4 +93,5 @@ public class UserAuthServiceImpl implements UserAuthService {
         Optional<User> userByEmail = userRepo.findUserByEmail(email);
         return userByEmail.map(User::getPassword).orElse(null);
     }
+
 }
