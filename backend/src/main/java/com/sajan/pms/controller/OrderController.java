@@ -23,13 +23,13 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable Integer orderId){
         return orderService.getOrderById(orderId).map(ResponseEntity::ok)
-                .orElseGet(()-> ResponseEntity.badRequest().build());
+                .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{orderId}")
     public ResponseEntity<Order> updateOrderById(@PathVariable Integer orderId, @RequestBody OrderRequest orderRequest){
         return orderService.updateOrderById(orderId, orderRequest).map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @PutMapping("/cancel-order/{orderId}")
     public ResponseEntity<Order> cancelOrder(@PathVariable Integer orderId){

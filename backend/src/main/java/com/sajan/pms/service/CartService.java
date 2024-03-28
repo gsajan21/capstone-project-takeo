@@ -13,8 +13,8 @@ import java.util.Optional;
 
 public interface CartService {
     Optional<List<CartItem>> viewAllCartItems();
-    Optional<CartItem> addToCart(CartItem cartItem);
-    Optional<Order> addCartItemsToOrder(OrderRequest orderRequest);
+    Optional<CartItem> getCartItemById(Integer cartId);
+    Optional<CartItem> addToCart(AddToCartRequest cartRequest);
     Optional<CartItem> removeFromCartById(Integer cartId);
     Optional<CartItem> updateQtyOfCartItem(Integer cartId, UpdateProductQtyRequest updateProductQtyRequest);
 }

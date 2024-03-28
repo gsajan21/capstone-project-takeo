@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddToCartRequest {
-    private User user;
-    private Product product;
+    private Integer userId;
+    private Integer productId;
     private Integer quantity;
     private BigDecimal totalPrice;
 }

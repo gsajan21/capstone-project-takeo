@@ -26,7 +26,7 @@ public class Order {
     private LocalDateTime dateCreated;
     private OrderStatus orderStatus;
     @OneToMany
-    private List<OrderDetails> orderDetails;
+    private List<OrderDetails> cartItems;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")

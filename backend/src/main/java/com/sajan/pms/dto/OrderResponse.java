@@ -21,8 +21,5 @@ public class OrderResponse {
     private BigDecimal totalAmount;
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id", referencedColumnName = "order_id")
     private User user;
 }

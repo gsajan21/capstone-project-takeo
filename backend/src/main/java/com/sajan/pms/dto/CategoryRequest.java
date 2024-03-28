@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProductQtyRequest {
-    private Integer quantity;
+@NoArgsConstructor
+public class CategoryRequest {
+    private String categoryName;
 }

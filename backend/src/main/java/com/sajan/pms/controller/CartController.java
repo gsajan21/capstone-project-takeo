@@ -1,5 +1,6 @@
 package com.sajan.pms.controller;
 
+import com.sajan.pms.dto.AddToCartRequest;
 import com.sajan.pms.dto.OrderRequest;
 import com.sajan.pms.dto.UpdateProductQtyRequest;
 import com.sajan.pms.model.CartItem;
@@ -7,6 +8,7 @@ import com.sajan.pms.model.Order;
 import com.sajan.pms.service.implementation.CartServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,10 +26,16 @@ public class CartController {
                 ResponseEntity.noContent().build());
 
     }
+    @GetMapping("/{cartId}")
+    public ResponseEntity<CartItem> getCartItemById(@PathVariable Integer cartId){
+        return cartService.getCartItemById(cartId).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @PostMapping("/add")
-    public ResponseEntity<CartItem> addToCart(@RequestBody CartItem cartItem){
-        return cartService.addToCart(cartItem).map(ResponseEntity::ok).orElseGet(() ->
+    public ResponseEntity<CartItem> addToCart(@RequestBody AddToCartRequest cartRequest){
+        System.out.println(cartRequest);
+        return cartService.addToCart(cartRequest).map(ResponseEntity::ok).orElseGet(() ->
                 ResponseEntity.badRequest().build());
     }
 
@@ -39,17 +47,11 @@ public class CartController {
      after saving the data in order table, save the product_order
      */
 
-    @PostMapping("/checkout")
-    public ResponseEntity<Order> checkout(@RequestBody OrderRequest orderRequest){
-        Optional<Order> orderOptional = cartService.addCartItemsToOrder(orderRequest);
-        return orderOptional.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().build());
-    }
 
     @DeleteMapping("/{cartId}")
     public ResponseEntity<CartItem> removeItemById(@PathVariable Integer cartId){
         return cartService.removeFromCartById(cartId).map(ResponseEntity::ok)
-                .orElse(ResponseEntity.badRequest().build());
+                .orElse(ResponseEntity.notFound().build());
     }
     @PutMapping("/{cartId}")
     public ResponseEntity<CartItem> updateItemByCartId(@PathVariable Integer cartId, UpdateProductQtyRequest request){

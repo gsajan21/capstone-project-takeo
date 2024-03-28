@@ -16,7 +16,10 @@ public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer quantity;
-    private BigDecimal price;
+    @ManyToOne
+    private Order order;
+    @OneToOne
+    private Product product;
+    private Integer quantity;;
     private BigDecimal totalPrice;
 }

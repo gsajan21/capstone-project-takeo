@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProductQtyRequest {
-    private Integer quantity;
+public class CheckoutRequest {
+    private Integer userId;
 }

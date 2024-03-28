@@ -28,16 +28,16 @@ public class UserApiController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/admin/{userId}")
     public ResponseEntity<User> updateUserById(@PathVariable Integer userId, @RequestBody UserRequest userRequest){
         return userService.updateUser(userId, userRequest).map(user -> ResponseEntity.ok().body(user))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUserById(@PathVariable Integer userId){
-        return userService.deleteUserById(userId).map(user-> ResponseEntity.ok().build())
-                .orElse(ResponseEntity.notFound().build());
+    @DeleteMapping("/admin/{userId}")
+    public ResponseEntity<User> deleteUserById(@PathVariable Integer userId){
+        return userService.deleteUserById(userId).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 //    @PostMapping("/forgot-password")
 //    public ResponseEntity<String> userForgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest){

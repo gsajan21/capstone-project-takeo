@@ -1,18 +1,16 @@
 package com.sajan.pms.service.implementation;
 
-import com.sajan.pms.dto.OrderRequest;
+import com.sajan.pms.dto.AddToCartRequest;
 import com.sajan.pms.dto.UpdateProductQtyRequest;
 import com.sajan.pms.model.*;
 import com.sajan.pms.repo.CartRepo;
-import com.sajan.pms.repo.OrderRepo;
+import com.sajan.pms.repo.ProductRepo;
+import com.sajan.pms.repo.UserRepo;
 import com.sajan.pms.service.CartService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,45 +19,42 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService {
 
     private final CartRepo cartRepo;
-    private final OrderRepo orderRepo;
+    private final ProductRepo productRepo;
+    private final UserRepo userRepo;
 
+
+    @Transactional(readOnly = true)
     @Override
     public Optional<List<CartItem>> viewAllCartItems() {
-        return Optional.of(cartRepo.findAll());
+        List<CartItem> itemList = cartRepo.findAll();
+        return Optional.of(itemList);
     }
 
     @Override
-    public Optional<CartItem> addToCart(CartItem cartItem) {
-
-        CartItem addToCart = new CartItem();
-        BeanUtils.copyProperties(cartItem, addToCart);
-        CartItem saveItem = cartRepo.save(addToCart);
-        return Optional.of(saveItem);
+    public Optional<CartItem> getCartItemById(Integer cartId) {
+        return cartRepo.findById(cartId);
     }
 
     @Override
-    public Optional<Order> addCartItemsToOrder(OrderRequest orderRequest) {
-        if(orderRequest == null){
+    public Optional<CartItem> addToCart(AddToCartRequest cartRequest) {
+        if (cartRequest == null || cartRequest.getProductId() == null || cartRequest.getUserId() == null) {
+            // Handle invalid input, such as missing product or user
             return Optional.empty();
         }
 
-        Order newOrder = new Order();
-        newOrder.setAddress(orderRequest.getAddress());
-        newOrder.setOrderStatus(orderRequest.getOrderStatus());
-        newOrder.setDateCreated(LocalDateTime.now());
+        Product product = productRepo.findById(cartRequest.getProductId()).get();
+        User user = userRepo.findById(cartRequest.getUserId()).get();
+        // Create a new CartItem instance and copy properties
+        CartItem newCartItem = new CartItem();
 
-        List<OrderDetails> orderDetailsList = new ArrayList<>();
-        for(Product singleProduct: orderRequest.getProduct()){
-            OrderDetails orderItem = new OrderDetails();
-            orderItem.setQuantity(singleProduct.getQuantity());
-            orderItem.setPrice(singleProduct.getPrice());
-            orderItem.setTotalPrice(singleProduct.getPrice().multiply(BigDecimal.valueOf(singleProduct.getQuantity())));
+        newCartItem.setProduct(product); // Ensure product reference is set properly
+        newCartItem.setUser(user); // Ensure user reference is set properly
+        newCartItem.setQuantity(cartRequest.getQuantity());
 
-            orderDetailsList.add(orderItem);
-        }
+        // Save the new CartItem to the repository
+        CartItem savedCartItem = cartRepo.save(newCartItem);
 
-        newOrder.setOrderDetails(orderDetailsList);
-        return Optional.of(orderRepo.save(newOrder));
+        return Optional.of(savedCartItem);
     }
 
     @Override
@@ -67,9 +62,8 @@ public class CartServiceImpl implements CartService {
 
         Optional<CartItem> byId = cartRepo.findById(cartId);
         if (byId.isPresent()) {
-            CartItem removeCartItem = byId.get();
-            cartRepo.delete(removeCartItem);
-            return Optional.of(removeCartItem);
+            cartRepo.delete(byId.get());
+            return byId;
         } else {
             return Optional.empty();
         }
@@ -85,17 +79,6 @@ public class CartServiceImpl implements CartService {
         }else
             return Optional.empty();
     }
-
-    // Helper method to calculate the total amount for the order
-    private BigDecimal calculateTotalAmount(List<CartItem> cartItems) {
-        BigDecimal totalAmount = BigDecimal.ZERO;
-        for (CartItem cartItem : cartItems) {
-            BigDecimal itemTotalPrice = cartItem.getTotalPrice();
-            totalAmount = totalAmount.add(itemTotalPrice);
-        }
-        return totalAmount;
-    }
-
 
 
 }

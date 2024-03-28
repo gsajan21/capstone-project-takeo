@@ -27,7 +27,7 @@ public class ProductApiController {
         return ResponseEntity.status(HttpStatus.OK).body(productList);
 
     }
-    @PostMapping("/add")
+    @PostMapping("/admin/add")
     public ResponseEntity<Product> addProduct(@RequestBody ProductDetails productDetails){
         Product savedProduct = productService.saveProduct(productDetails).orElseThrow(() ->
                 new RuntimeException("Failed to save the product"));
@@ -37,19 +37,17 @@ public class ProductApiController {
 
     @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer productId){
-        Product product = productService.getProductById(productId).orElseThrow(() ->
-                new NoSuchElementException("Product not found."));
-
-        return ResponseEntity.status(HttpStatus.OK).body(product);
+        return productService.getProductById(productId).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @PutMapping("/{productId}")
+    @PutMapping("/admin/{productId}")
     public ResponseEntity<Product> updateProductById(@PathVariable Integer productId, @RequestBody ProductDetails productDetails){
         Optional<Product> product = productService.updateProductById(productId, productDetails);
         return product.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
 
     }
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/admin/{productId}")
     public ResponseEntity<Product> deleteProductById(@PathVariable Integer productId){
         return productService.deleteProductById(productId).map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

@@ -23,7 +23,7 @@ import java.util.List;
 public class OrderRequest {
     private Address address;
     private User user;
-    private List<Product> product;
+    private List<CartItem> cartItems;
     private LocalDateTime dateCreated;
     private OrderStatus orderStatus;
     private Integer quantity;
