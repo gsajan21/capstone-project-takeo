@@ -5,6 +5,7 @@ import com.sajan.pms.model.Order;
 import com.sajan.pms.service.implementation.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderServiceImpl orderService;
-    @GetMapping("/all")
+    @GetMapping("/admin/all")
     public ResponseEntity<List<Order>> getAllOrders(){
         return orderService.getAllOrders().map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.noContent().build());
@@ -24,6 +25,11 @@ public class OrderController {
     public ResponseEntity<Order> getOrderById(@PathVariable Integer orderId){
         return orderService.getOrderById(orderId).map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.notFound().build());
+    }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Order>> getOrderByUserId(@PathVariable Integer userId){
+        return orderService.getOrdersByUserId(userId).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{orderId}")

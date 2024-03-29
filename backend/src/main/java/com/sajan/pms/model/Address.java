@@ -18,4 +18,5 @@ public class Address {
     private String streetName;
     private String stateName;
     private String country;
+    private Integer userId;
 }

@@ -20,16 +20,17 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
-    @OneToOne
-    private Address address;
     private BigDecimal totalAmount;
     private LocalDateTime dateCreated;
     private OrderStatus orderStatus;
     @OneToMany
-    private List<OrderDetails> cartItems;
+    @JsonIgnore
+    private List<OrderDetails> orderDetails;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
+    @OneToOne
+    private Address address;
 }
 

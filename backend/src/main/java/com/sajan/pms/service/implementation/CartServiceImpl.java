@@ -31,6 +31,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public Optional<List<CartItem>> getAllCartItemsByUserId(Integer userId) {
+        Optional<User> byId = userRepo.findById(userId);
+        if(byId.isPresent())
+            return cartRepo.findAllByUser(byId.get());
+        else return Optional.empty();
+    }
+
+    @Override
     public Optional<CartItem> getCartItemById(Integer cartId) {
         return cartRepo.findById(cartId);
     }

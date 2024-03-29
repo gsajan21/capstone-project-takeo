@@ -1,6 +1,7 @@
 package com.sajan.pms.controller;
 
 import com.sajan.pms.dto.AddToCartRequest;
+import com.sajan.pms.dto.CartResponse;
 import com.sajan.pms.dto.OrderRequest;
 import com.sajan.pms.dto.UpdateProductQtyRequest;
 import com.sajan.pms.model.CartItem;
@@ -20,11 +21,16 @@ import java.util.Optional;
 public class CartController {
 
     private final CartServiceImpl cartService;
-    @GetMapping("/all")
-    public ResponseEntity<List<CartItem>> getAllCartItem(){
+    @GetMapping("/admin/all")
+    public ResponseEntity<List<CartItem>> getAllCartItems(){
         return cartService.viewAllCartItems().map(ResponseEntity::ok).orElseGet(() ->
                 ResponseEntity.noContent().build());
 
+    }
+    @GetMapping("/user/{userId}") // {userId}
+    public ResponseEntity<List<CartItem>> getAllCartItemsById(@PathVariable Integer userId){
+        return cartService.getAllCartItemsByUserId(userId).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @GetMapping("/{cartId}")
     public ResponseEntity<CartItem> getCartItemById(@PathVariable Integer cartId){
@@ -38,14 +44,6 @@ public class CartController {
         return cartService.addToCart(cartRequest).map(ResponseEntity::ok).orElseGet(() ->
                 ResponseEntity.badRequest().build());
     }
-
-    /*
-     /checkout/{userId}
-     fetch userCartItem from carts table using the id of user
-     perform necessary calculations
-     save the records in order table,
-     after saving the data in order table, save the product_order
-     */
 
 
     @DeleteMapping("/{cartId}")

@@ -18,8 +18,9 @@ public class OrderDetails {
     private Integer id;
     @ManyToOne
     private Order order;
-    @OneToOne
-    private Product product;
+    private Integer productId;
+    private String productName;
+    private String productDescription;
     private Integer quantity;;
     private BigDecimal totalPrice;
 }

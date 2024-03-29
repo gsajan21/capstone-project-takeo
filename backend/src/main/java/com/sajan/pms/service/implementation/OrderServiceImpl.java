@@ -5,6 +5,7 @@ import com.sajan.pms.enums.OrderStatus;
 import com.sajan.pms.model.Order;
 import com.sajan.pms.model.User;
 import com.sajan.pms.repo.OrderRepo;
+import com.sajan.pms.repo.UserRepo;
 import com.sajan.pms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepo orderRepo;
+    private final UserRepo userRepo;
     @Override
     public Optional<List<Order>> getAllOrders() {
         List<Order> allOrders = orderRepo.findAll();
@@ -50,6 +52,14 @@ public class OrderServiceImpl implements OrderService {
             return Optional.of(cancelOrder);
         }else
             return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<Order>> getOrdersByUserId(Integer userId) {
+        Optional<User> byId = userRepo.findById(userId);
+        if(byId.isPresent()){
+            return orderRepo.getOrdersByUser(byId.get());
+        } else return Optional.empty();
     }
 
 }

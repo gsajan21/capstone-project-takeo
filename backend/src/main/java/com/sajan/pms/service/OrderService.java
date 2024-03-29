@@ -12,4 +12,5 @@ public interface OrderService {
     Optional<Order> getOrderById(Integer orderId);
     Optional<Order> updateOrderById(Integer orderId, OrderRequest orderRequest);
     Optional<Order> cancelOrderById(Integer orderId);
+    Optional<List<Order>> getOrdersByUserId(Integer userId);
 }
